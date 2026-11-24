@@ -31,26 +31,32 @@ public class SEAssessmentSystem {
      */
     ArrayList<String> studentCIDs = new ArrayList<>();
     HashMap<String,Student> students = new HashMap<>();
-
-    private int COL_PER_ROW = 4;
-    private int NO_ROWS = studentCIDs.size() % COL_PER_ROW;
-    JLabel[] cells = new JLabel[studentCIDs.size()];
     private int tick = 0;
+    JLabel[] cells = new JLabel[getCIDs().size()];
+
 
     public SEAssessmentSystem() {
+        for (String student : assessments.AssessmentFeed.getCIDs()) {
+            studentCIDs.add(student);
+            System.out.println(student);
+        }
+        int cols = 4;
+        int rows = (studentCIDs.size() + cols - 1) / cols;
         JFrame frame = new JFrame("SE Assessment");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel studentPanel = new JPanel(new GridLayout(NO_ROWS, COL_PER_ROW, 10, 10));
+        JPanel studentPanel = new JPanel(new GridLayout(rows, cols, 10, 10));
         for (int i = 0; i < studentCIDs.size(); i++) {
             cells[i] = new JLabel("", SwingConstants.CENTER);
             cells[i].setOpaque(true);
-            cells[i].setBackground(Color.RED);
             studentPanel.add(cells[i]);
         }
         frame.add(studentPanel);
         frame.setSize(400, 400);
         frame.setVisible(true);
-        //TO DO: add refresh
+        refresh();
+        Timer timer = new Timer(1000, e -> refresh());
+        timer.start();
+        
 
         for (String student : assessments.AssessmentFeed.getCIDs()) {
             studentCIDs.add(student);
