@@ -35,6 +35,7 @@ public class SEAssessmentSystem {
     JLabel[] cells = new JLabel[getCIDs().size()];
 
 
+
     public SEAssessmentSystem() {
         for (String student : assessments.AssessmentFeed.getCIDs()) {
             studentCIDs.add(student);
@@ -63,7 +64,7 @@ public class SEAssessmentSystem {
             System.out.println(student);
         }
 
-        for (String CID : studentCIDs) {
+        for (String CID : getCIDs()) {
             if(assessments.AssessmentFeed.getStudentType(CID).equals("MSc")){
                 MScStudent student = new MScStudent(assessments.AssessmentFeed.getStudentName(CID), CID);
                 student.logIPT(
@@ -96,7 +97,7 @@ public class SEAssessmentSystem {
 
     private void refresh() {
         for (int i = 0; i < cells.length; i++) {
-            if(getStudentType(studentCIDs.get(i)).equals("MSc")){
+            if(getStudentType(getCIDs().get(i)).equals("MSc")){
                 MScStudent student = (MScStudent)students.get(studentCIDs.get(i));
                 cells[i].setText(String.format("<html>Name: %s<br>CID: %s<br>" +
                         "Independent Programming Test: %.2f<br>" +
